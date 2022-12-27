@@ -26,8 +26,7 @@ runs:
       - name: FF Merge
         id: ffmerge
         run: |
-          git checkout ${{ github.event.release.tag_name }} 
-          git checkout -f -b ${{ inputs.branch }}
+          git checkout -f -b ${{ inputs.branch }} ${{ github.event.release.tag_name }}
         shell: bash
       - name: Push changes
         uses: ad-m/github-push-action@master
