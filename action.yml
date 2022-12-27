@@ -1,0 +1,36 @@
+name: 'Branch Follow Action'
+branding:
+  icon: 'git-commit'
+  color: 'purple'
+description: 'Branch will be moved to most recent tag.'
+inputs:
+  branch:
+    description: 'Branch to be moved'
+  GITHUB_TOKEN:
+    description: 'Automatically provided token, that can be used to authenticate on behalf of the GitHub action, with permissions limited to the repository that contains your workflow'
+  SSH_PRIVATE_KEY:
+    description: 'deploy key for push.'
+    default: '0'
+runs:
+  using: "composite"
+  steps:  
+      - uses: actions-cool/check-user-permission@v2
+        with:
+          require: 'write'
+      - name: Checkout code into workspace directory
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ssh-key: ${{ inputs.SSH_PRIVATE_KEY }}
+          persist-credentials: true
+      - name: FF Merge
+        id: ffmerge
+        run: |
+          git checkout ${{ github.event.release.tag_name }} 
+          git checkout -f -b ${{ inputs.branch }}
+        shell: bash
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          ssh: true
+          branch: ${{ steps.ffaction.outputs.ffbase }}
