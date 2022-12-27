@@ -33,4 +33,4 @@ runs:
         uses: ad-m/github-push-action@master
         with:
           ssh: true
-          branch: ${{ steps.ffaction.outputs.ffbase }}
+          branch: ${{ inputs.branch }}
