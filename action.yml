@@ -23,14 +23,17 @@ runs:
           fetch-depth: 0
           ssh-key: ${{ inputs.SSH_PRIVATE_KEY }}
           persist-credentials: true
+        if: github.event_name != 'pull_request'
       - name: FF Merge
         id: ffmerge
         run: |
           git checkout ${{ inputs.branch }}
           git merge --ff-only  ${{ github.ref_name }}
         shell: bash
+        if: github.event_name != 'pull_request'
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           ssh: true
           branch: ${{ inputs.branch }}
+        if: github.event_name != 'pull_request'
