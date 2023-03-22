@@ -3,6 +3,7 @@
 ## Use case
 
 Keep a branch always referencing to the most recent tag.
+For instance a stable branch that always points to the last release.
 
 ## Inputs
 
