@@ -18,7 +18,7 @@ runs:
         with:
           require: 'write'
       - name: Checkout code into workspace directory
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ssh-key: ${{ inputs.SSH_PRIVATE_KEY }}
